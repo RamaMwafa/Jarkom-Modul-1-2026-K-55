@@ -1,9 +1,11 @@
 # Jarkom-Modul1-K55-2026
 
 ## Anggota Kelompok
-| Nama | NRP |
-| M. Rama Maulana Wafa | 5027251019 |
-| Arjunina Maqbulin Usman | 5027251007 |
+| Nama | NRP | 
+|------|-----|
+| M. Rama Maulana Wafa | 5027251019 |                                 
+| Arjunina Maqbulin Usman | 5027251007 |  
+
 Soal 1 : Pada soal ini kita diminta untuk membuat topologi jaringan dengan keterangan, 1 router (Lain), 3 switch, 5 client (Alice, Mika, Chisa, knights, Eiri)
 <img width="594" height="587" alt="image" src="https://github.com/user-attachments/assets/7f3c927e-4d20-45ac-a23c-74734833cf74" />
 
