@@ -101,6 +101,19 @@ Mika - Knights
 Mika - Eiri
 <img width="536" height="201" alt="image" src="https://github.com/user-attachments/assets/7683f418-af92-40c1-a9af-f1f79e0e13ee" />
 
+pembuktian ftp alice 
+<img width="313" height="161" alt="image" src="https://github.com/user-attachments/assets/f652992b-ff85-43ee-a49c-02099b3b8a72" />
+
+pembuktian penolakan ftp eiri
+<img width="238" height="133" alt="image" src="https://github.com/user-attachments/assets/a0479c5c-999c-4eba-8c9f-d40bac31d021" />
+
+sukses login node knights dengan akun alice
+<img width="313" height="167" alt="image" src="https://github.com/user-attachments/assets/9850338b-5201-480a-894b-7e887de3804d" />
+
+bukti pembatasan user ftp eiri untuk upload file
+<img width="575" height="323" alt="image" src="https://github.com/user-attachments/assets/937942e3-17a7-4a3f-b6bf-e563011f11dc" />
+
+
 
 
 Soal 4: 
