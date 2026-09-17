@@ -97,9 +97,91 @@ Mika - Chisa
 
 Mika - Knights
 
+Soal 4: Kita diminta agar setiap client bisa melakukan ping 8.8.8.8 dan membuka domain web google.com
+
+```
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+```
+Hasil setelah melakukan `ping 8.8.8.8` dan `ping google.com`
+Alice
+
+
+Mika
+<img width="645" height="380" alt="image" src="https://github.com/user-attachments/assets/51c7c9c9-3cc8-4095-a2b6-d6aca0a70234" />
+
+Chisa
+<img width="646" height="355" alt="image" src="https://github.com/user-attachments/assets/4925005e-26db-42de-bb44-4f81dc99ae47" />
+
+Knights
+<img width="654" height="307" alt="image" src="https://github.com/user-attachments/assets/b6dcccb6-7999-49c7-b29b-4bcc294baa47" />
+
+Eiri
 
 Mika - Eiri
 <img width="536" height="201" alt="image" src="https://github.com/user-attachments/assets/7683f418-af92-40c1-a9af-f1f79e0e13ee" />
+
+
+Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` agar ketika restart konfigurasi jaringan tidak hilang
+<img width="266" height="185" alt="image" src="https://github.com/user-attachments/assets/4342211b-372c-4fe0-b59d-e00e02dd2c07" />
+
+Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP
+
+Soal 7: Chisa mendirikan server FTP dan membuat beberapa akun, seperti alice(read & write), mika(read only), dan eiri(blacklist). Lalu kita perlu membuktikan bahwa user alice dan eiri berjalan sesuai akses yang diberikan
+Pertama kita update dan upgrade node Chisa
+```
+apt update & apt upgrade -y
+```
+lalu kita download vsftpd
+```
+apt install vsftpd -y
+```
+lalu kita buat folder yang diminta
+```
+mkdir -p /var/wired/data
+```
+kita tambahkan user sesuai yang ada di soal
+```
+useradd -m -s /bin/bash alice
+useradd -m -s /bin/bash mika
+useradd -m -s /bin/bash eiri
+```
+```
+passwd alice
+passwd mika
+passwd eiri
+```
+```
+chown alice:mika /var/wired/data
+chmod 750 /var/wired/data
+```
+```
+echo "eiri" > /etc/vsftpd.user_list
+```
+Lalu sesuaikan config yang ada dengan config berikut di dalam file `vsftpd.user_list`
+```
+listen=YES
+local_enable=YES
+write_enable=YES
+listen_ipv6=NO
+local_root=/var/wired/data
+userlist_enable=YES
+userlist_deny=YES
+userlist_file=/etc/vsftpd.user_list
+```
+Ini adalah command untuk melakukan restart vsftpd
+```
+systemctl restart vsftpd
+```
+atau
+```
+service vsftpd restart
+```
+Ini adalah command untuk mengaktifkan vsftpd
+```
+service vsftpd start
+```
+
+Kemudian kita lakukan uji coba dengan login dengan akun alice kemudian memasukkan file `signal_alice.txt` dan mencoba membuktikan penolakan akses user eiri
 
 pembuktian ftp alice 
 <img width="313" height="161" alt="image" src="https://github.com/user-attachments/assets/f652992b-ff85-43ee-a49c-02099b3b8a72" />
@@ -113,7 +195,5 @@ sukses login node knights dengan akun alice
 bukti pembatasan user ftp eiri untuk upload file
 <img width="575" height="323" alt="image" src="https://github.com/user-attachments/assets/937942e3-17a7-4a3f-b6bf-e563011f11dc" />
 
+Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi mneggunakan user alice
 
-
-
-Soal 4: 
