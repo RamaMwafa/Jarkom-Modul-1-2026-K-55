@@ -203,16 +203,140 @@ bukti pembatasan user ftp eiri untuk upload file
 
 Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi mneggunakan user alice
 
-Soal 11: Pada soal 11 kita diminta membuktikan kelemahan protokol Telnet dengan membuat akun phantom_user dan password wired_ghost  pada layanan tenetd di node Chisa. Lalu melakukan login Telnet dari node Eiri ke node Chisa dan menangkap sesi menggunakan Wireshark.               
+### Soal 11: Pada soal ini kita diminta membuktikan kelemahan protokol Telnet               
+
+Untuk membuktikan kelemahan protokol Telnet dalam mengirimkan kredensial, dibuat sebuah akun uji coba dengan username `phantom_user` dengan pada node chisa, kemudian dilakukan proses login dari jarak jauh dari node Eiri menggunakan Telnet sambil melakukan packet sniffing menggunakan Wireshark.
+
+Langkah pertama adalah melakukan instalasi Telnet server pada node Chisa Package yang digunakan adalah `inetutils-telnetd` beserta `xinetd` sebagai daemon yang menangani koneksi masuk
+``` sh
+apt update
+apt install inetutils-telnetd  xinetd -y
+```
+
+Lanjut dengan membuat user `phantom_user` dengan password `wired_ghost`
+
+```sh
+useradd -m -s /bin/bash phantom_user
+echo "phantom_user:wired_ghost" | chpasswd
+```
+
+Kemudian dilakukan koonfigurasi pada `/etc/xinetd.d/telnet` untuk mengaktifkan service Telnet dan mengarahkannya ke binary yang benar
+```sh
+service telnet
+{
+disable = no
+flags = REUSE
+socket_type = stream
+wait = no
+user = root
+server = /usr/sbin/telnetd
+log_on_failure += USERID
+}
+```
+
+Setelah konfigurasi selesai, service `xinetd` direstart agar perubahan dapat digunakan
+```sh
+service xinetd restart
+```
+Untuk memastikan Telnet server sudah berjalan dengan baik, dilakukan pengecekan port menggunakan 
+```sh
+ss - tulnp |  grep 23
+```
+
+Selanjutnya, dari node Eiri dilakukan instalasi Telnet client
+```sh
+apt install telnet -y
+```
+
+Setelah capture aktif, dilakukan koneksi Telnet dari Eiri menuju Chisa
+Sebelum melakukan koneksi, capture packet dimulai terlebih dahulu pada link yang menghubungkan Eiri ke jaringan (Switch3–Eiri), agar seluruh proses handshake dan login dapat terekam sejak awal.                   
+<img width="943" height="691" alt="image" src="https://github.com/user-attachments/assets/4a4516a1-9b9d-4b69-900c-a0333a752854" />
+```sh
+telnet 10.91.2.2
+```
+
+Login dilakukan menggunakan kredensial `phantom_user` / `wired_ghost`, dilanjutkan dengan menjalankan beberapa command sederhana (`whoami`, `pwd`) sebagai bukti sesi berjalan normal, sebelum akhirnya keluar dengan `exit`.
+
+Setelah sesi selesai, capture dihentikan dan hasilnya dianalisis di Wireshark dengan menerapkan display filter `telnet` untuk hanya menampilkan trafik yang relevan.
+
 
 List paket Telnet dan Detail  1 paket Telnet                                   
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a1d7a2b3-9d25-4467-bf99-a0db6f1448d2" />                                                  
-Gambar tersebut menunjukkan beberapa paket kecil yang terjadi dalam satu sesi login Telnet. Satu sesi login telnet menghasilkan puluhan paket keci, jauh lebih banyak dibandingkan jumlah karakter yang sebenarnya diktik pengguna. Di dalam detail satu paket tersebut juga terdapat satu huruf, hal ini dikarenakan telnet beroperasi dalam character mode, di mana setiap karakter yang diketik pengguna langsung dikirim sebagai paket data terpisah, tanpa menunggu input selesai. Hal ini terlihat dari paket individual yang hanya berisi satu byte data per paketnya.                                        
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a1d7a2b3-9d25-4467-bf99-a0db6f1448d2" />  
+Terlihat bahwa satu sesi login menghasilkan puluhan paket kecil berurutan. Hal ini terjadi karena Telnet beroperasi dalam **character mode**, bukan line mode — setiap karakter yang diketik pada keyboard langsung dikirim sebagai satu paket TCP terpisah pada saat itu juga, tanpa menunggu input selesai atau tombol Enter ditekan. Hal ini dirancang demikian agar interaksi terminal dapat berjalan secara real-time, sesuai spesifikasi *Network Virtual Terminal* (NVT) pada RFC 854. Terlihat bahwa payload data pada paket tersebut hanya berisi satu karakter tunggal, membuktikan bahwa setiap keystroke dikirim sebagai paket independen.
+                                  
 Follow TCP Stream                                       
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/70c0110d-efc8-45e9-bd36-ec5837ca3d43" />                         
-
-Melalui fitur Follow TCP Stream, seluruh isi sesi Telnet dapat menjadi teks yang mudah dibaca, termasuk kredensial login (username: phantom_user, password: wired_ghost) yang terkirim tanpa enkripsi sama sekali. Ini membuktikan bahwa siapapun yang mampu menyadap trafik jaringan dapat langsung membaca kredensial pengguna tanpa perlu proses dekripsi. Walaupun pada hasil Follow TCP Stream, terlihat bahwa karakter-karakter username (phantom_user) muncul dua kali secara berurutan (misalnya "p" "p", "h" "h"), hal ini disebabkan oleh mekanisme remote echo pada Telnet, setiap karakter yang dikirim client akan dikirim balik oleh server agar tampil pada layar pengguna. Sebaliknya, karakter-karakter pada input password (wired_ghost) hanya muncul satu kali, karena sistem operasi pada sisi server menonaktifkan echo saat mode input password untuk mencegah password tampil di layar terminal. Namun demikian, penonaktifan echo ini hanya berlaku pada tampilan visual di layar client, sedangkan data password itu sendiri tetap dikirim dalam bentuk plaintext melalui jaringan dan dapat terbaca sepenuhnya oleh pihak yang melakukan penyadapan (sniffing), sebagaimana terlihat pada hasil capture.
-
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/70c0110d-efc8-45e9-bd36-ec5837ca3d43" />  
+Dari hasil TCP Stream, terlihat jelas bahwa kredensial login (`phantom_user` sebagai username dan `wired_ghost` sebagai password) dapat dibaca secara langsung tanpa proses dekripsi apapun. Hal ini membuktikan bahwa Telnet tidak menyediakan mekanisme enkripsi sama sekali, sehingga siapapun yang mampu menyadap trafik jaringan dapat langsung memperoleh kredensial pengguna.
 
 
+### 13. Administrasi Jarak Jauh Aman Menggunakan SSH (Public Key Authentication)
+Untuk mengamankan proses administrasi jarak jauh, dikonfigurasikan autentikasi SSH berbasis public key (tanpa password) dari node Mika menuju node Knights.
+
+Langkah pertama adalah melakukan instalasi OpenSSH server pada node Knights:
+
+```sh
+apt update
+apt install openssh-server -y
+service ssh start
+```
+
+Kemudian dibuat user baru `mika_admin` sebagai target akun administrasi:
+
+```sh
+useradd -m -s /bin/bash mika_admin
+echo "mika_admin:mika_password" | chpasswd
+```
+
+Selanjutnya, pada node Mika dilakukan pembuatan pasangan kunci SSH (key pair) menggunakan algoritma Ed25519:
+
+```sh
+ssh-keygen -t ed25519
+```
+
+Proses ini menghasilkan dua file: private key (`id_ed25519`) yang disimpan secara rahasia di Mika, dan public key (`id_ed25519.pub`) yang akan didistribusikan ke server.
+
+Public key kemudian disalin ke Knights menggunakan `ssh-copy-id`:
+
+```sh
+ssh-copy-id mika_admin@10.91.3.2
+```
+
+
+Setelah public key berhasil disalin, dilakukan verifikasi login untuk memastikan autentikasi berbasis key sudah berfungsi sebelum password authentication dinonaktifkan:
+
+```sh
+ssh mika_admin@10.91.3.2
+```
+
+Login berhasil dilakukan tanpa diminta password, menandakan public key authentication sudah berjalan dengan benar.
+
+Setelah terverifikasi, langkah selanjutnya adalah menonaktifkan password authentication pada Knights agar hanya public key yang dapat digunakan untuk login:
+
+```sh
+echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
+echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
+service ssh restart
+```
+Dengan konfigurasi ini, SSH server tidak akan pernah menawarkan opsi login menggunakan password, sehingga satu-satunya jalur masuk yang valid adalah melalui public key yang sudah terdaftar di `authorized_keys`.
+
+Untuk keperluan analisis, capture packet dimulai pada link Switch1–Mika sebelum koneksi SSH dilakukan ulang:                       
+<img width="942" height="682" alt="image" src="https://github.com/user-attachments/assets/14dc9784-10ba-446d-ad32-e91d6a54f486" />                   
+
+```sh
+ssh mika_admin@10.91.3.2
+```
+
+Hasil capture kemudian dianalisis di Wireshark dengan filter `ssh`.                            
+<img width="1537" height="865" alt="image" src="https://github.com/user-attachments/assets/43c3534c-2d40-412f-b50c-a7b02dea0086" />                                 
+
+Pada awal sesi, ditemukan paket **Protocol Version Exchange**, yaitu pertukaran informasi versi protokol antara client dan server   
+Selanjutnya ditemukan paket **Key Exchange Init**, yang berisi daftar algoritma kriptografi yang ditawarkan masing-masing pihak                       
+<img width="1697" height="870" alt="image" src="https://github.com/user-attachments/assets/c384fcb0-3902-407f-baf1-1ee0ba8c928e" />                          
+Paket ini menunjukkan berbagai pilihan algoritma seperti `kex_algorithms` (mlkem768x25519-sha256, curve25519-sha256, dll), `encryption_algorithms` (chacha20-poly1305, aes256-gcm, dll), dan `mac_algorithms` untuk integritas data. Meskipun isi paket ini masih dapat dibaca, kontennya hanya berupa daftar kemampuan algoritma, bukan kredensial.                          
+<img width="1543" height="868" alt="image" src="https://github.com/user-attachments/assets/1028bf6d-c20c-4707-93cc-bbfbf529c76a" />              
+<img width="1571" height="871" alt="image" src="https://github.com/user-attachments/assets/91d559e9-b24d-4712-9dda-241d9f4905c0" />                                 
+
+Berbeda dengan paket-paket sebelumnya, paket ini hanya berisi deretan data heksadesimal acak (ciphertext) tanpa informasi yang dapat dibaca langsung. Hal ini mencakup seluruh proses autentikasi public key maupun isi sesi (`whoami`, `pwd`) yang dijalankan setelahnya.
+
+Kredensial tidak terlihat dalam bentuk plaintext seperti pada sesi Telnet karena dua alasan utama, yaitu Enkripsi end-to-end diaktifkan sejak awal sesi dan Public key authentication tidak pernah mengirimkan private key melalui jaringan.
 
