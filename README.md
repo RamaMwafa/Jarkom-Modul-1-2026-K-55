@@ -319,7 +319,8 @@ service xinetd restart
 Untuk memastikan Telnet server sudah berjalan dengan baik, dilakukan pengecekan port menggunakan 
 ```sh
 ss - tulnp |  grep 23
-```
+```                                        
+<img width="801" height="377" alt="image" src="https://github.com/user-attachments/assets/bbeb7f92-6b09-4ff4-896f-863c6e054300" />
 
 Selanjutnya, dari node Eiri dilakukan instalasi Telnet client
 ```sh
@@ -333,7 +334,8 @@ Sebelum melakukan koneksi, capture packet dimulai terlebih dahulu pada link yang
 telnet 10.91.2.2
 ```
 
-Login dilakukan menggunakan kredensial `phantom_user` / `wired_ghost`, dilanjutkan dengan menjalankan beberapa command sederhana (`whoami`, `pwd`) sebagai bukti sesi berjalan normal, sebelum akhirnya keluar dengan `exit`.
+Login dilakukan menggunakan kredensial `phantom_user` / `wired_ghost`, dilanjutkan dengan menjalankan beberapa command sederhana (`whoami`, `pwd`) sebagai bukti sesi berjalan normal, sebelum akhirnya keluar dengan `exit`.                         
+<img width="735" height="563" alt="image" src="https://github.com/user-attachments/assets/cea0eb7a-4945-49ab-9277-2f4d019b6078" />
 
 Setelah sesi selesai, capture dihentikan dan hasilnya dianalisis di Wireshark dengan menerapkan display filter `telnet` untuk hanya menampilkan trafik yang relevan. 
 
@@ -378,13 +380,15 @@ Public key kemudian disalin ke Knights menggunakan `ssh-copy-id`:
 ```sh
 ssh-copy-id mika_admin@10.91.3.2
 ```
-
+<img width="1182" height="540" alt="image" src="https://github.com/user-attachments/assets/25941bea-ab0b-4880-86f9-1c7a413fd8ed" />
 
 Setelah public key berhasil disalin, dilakukan verifikasi login untuk memastikan autentikasi berbasis key sudah berfungsi sebelum password authentication dinonaktifkan:
 
 ```sh
 ssh mika_admin@10.91.3.2
-```
+```           
+<img width="1113" height="577" alt="image" src="https://github.com/user-attachments/assets/873a6595-8c62-45eb-95c8-6a9d07f00318" />             
+<img width="735" height="238" alt="image" src="https://github.com/user-attachments/assets/d10cda20-0ba7-4bd7-ae3e-ee6ddb521389" />              
 
 Login berhasil dilakukan tanpa diminta password, menandakan public key authentication sudah berjalan dengan benar.
 
@@ -402,7 +406,8 @@ Untuk keperluan analisis, capture packet dimulai pada link Switch1–Mika sebelu
 
 ```sh
 ssh mika_admin@10.91.3.2
-```
+```                                  
+<img width="1060" height="578" alt="image" src="https://github.com/user-attachments/assets/5e7f1a95-d6f2-4858-b6c5-eaf320f06f85" />
 
 Hasil capture kemudian dianalisis di Wireshark dengan filter `ssh`.                            
 <img width="1537" height="865" alt="image" src="https://github.com/user-attachments/assets/43c3534c-2d40-412f-b50c-a7b02dea0086" />                                 
