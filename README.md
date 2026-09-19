@@ -7,6 +7,7 @@
 | Arjunina Maqbulin Usman | 5027251007 |  
 
 Soal 1 : Pada soal ini kita diminta untuk membuat topologi jaringan dengan keterangan, 1 router (Lain), 3 switch, 5 client (Alice, Mika, Chisa, knights, Eiri)
+
 <img width="594" height="587" alt="image" src="https://github.com/user-attachments/assets/7f3c927e-4d20-45ac-a23c-74734833cf74" />
 
 Soal 2: kita diminta untuk mengkonfigurasi Lain agar dapat tersambung pada internet melalui NAT/DHCP pada interface eth0
@@ -35,6 +36,7 @@ iface eth3 inet static
     netmask 255.255.255.0
 ```
 Hasil `ping google.com` dari Lain
+
 <img width="642" height="197" alt="image" src="https://github.com/user-attachments/assets/0111e87b-ccb3-4fce-8aa8-22130b1c6fc7" />
 
 Konfigurasi untuk setiap client
@@ -85,23 +87,30 @@ iface eth0 inet static
 
 Hasil `ping` setiap client
 Alice - Mika
+
 <img width="523" height="150" alt="image" src="https://github.com/user-attachments/assets/3d544d21-19dc-4342-ac20-3021a90165c0" />
 
 Alice - Chisa
+
 <img width="546" height="146" alt="image" src="https://github.com/user-attachments/assets/2a0968cc-fde9-437e-9ce6-429bf2743d19" />
 
 Alice - Knights
 
 Alice - Eiri
+
 <img width="535" height="149" alt="image" src="https://github.com/user-attachments/assets/e4ea6c31-fe9e-4144-8986-6eb0872380cb" />
 
 Mika - Alice
 
-
 Mika - Chisa
+
 <img width="575" height="150" alt="image" src="https://github.com/user-attachments/assets/732ee950-91ee-4040-acfb-493ea33eebf5" />
 
 Mika - Knights
+
+Mika - Eiri
+
+<img width="536" height="201" alt="image" src="https://github.com/user-attachments/assets/7683f418-af92-40c1-a9af-f1f79e0e13ee" />
 
 Soal 4: Kita diminta agar setiap client bisa melakukan ping 8.8.8.8 dan membuka domain web google.com
 
@@ -113,21 +122,21 @@ Alice
 
 
 Mika
+
 <img width="645" height="380" alt="image" src="https://github.com/user-attachments/assets/51c7c9c9-3cc8-4095-a2b6-d6aca0a70234" />
 
 Chisa
+
 <img width="646" height="355" alt="image" src="https://github.com/user-attachments/assets/4925005e-26db-42de-bb44-4f81dc99ae47" />
 
 Knights
+
 <img width="654" height="307" alt="image" src="https://github.com/user-attachments/assets/b6dcccb6-7999-49c7-b29b-4bcc294baa47" />
 
 Eiri
 
-Mika - Eiri
-<img width="536" height="201" alt="image" src="https://github.com/user-attachments/assets/7683f418-af92-40c1-a9af-f1f79e0e13ee" />
-
-
 Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` agar ketika restart konfigurasi jaringan tidak hilang
+
 <img width="266" height="185" alt="image" src="https://github.com/user-attachments/assets/4342211b-372c-4fe0-b59d-e00e02dd2c07" />
 
 Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP
@@ -190,15 +199,19 @@ service vsftpd start
 Kemudian kita lakukan uji coba dengan login dengan akun alice kemudian memasukkan file `signal_alice.txt` dan mencoba membuktikan penolakan akses user eiri
 
 pembuktian ftp alice 
+
 <img width="313" height="161" alt="image" src="https://github.com/user-attachments/assets/f652992b-ff85-43ee-a49c-02099b3b8a72" />
 
 pembuktian penolakan ftp eiri
+
 <img width="238" height="133" alt="image" src="https://github.com/user-attachments/assets/a0479c5c-999c-4eba-8c9f-d40bac31d021" />
 
 sukses login node knights dengan akun alice
+
 <img width="313" height="167" alt="image" src="https://github.com/user-attachments/assets/9850338b-5201-480a-894b-7e887de3804d" />
 
 bukti pembatasan user ftp eiri untuk upload file
+
 <img width="575" height="323" alt="image" src="https://github.com/user-attachments/assets/937942e3-17a7-4a3f-b6bf-e563011f11dc" />
 
 Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi mneggunakan user alice
