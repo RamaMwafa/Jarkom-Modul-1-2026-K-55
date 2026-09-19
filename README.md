@@ -330,7 +330,7 @@ telnet 10.91.2.2
 
 Login dilakukan menggunakan kredensial `phantom_user` / `wired_ghost`, dilanjutkan dengan menjalankan beberapa command sederhana (`whoami`, `pwd`) sebagai bukti sesi berjalan normal, sebelum akhirnya keluar dengan `exit`.
 
-Setelah sesi selesai, capture dihentikan dan hasilnya dianalisis di Wireshark dengan menerapkan display filter `telnet` untuk hanya menampilkan trafik yang relevan.
+Setelah sesi selesai, capture dihentikan dan hasilnya dianalisis di Wireshark dengan menerapkan display filter `telnet` untuk hanya menampilkan trafik yang relevan. 
 
 
 List paket Telnet dan Detail  1 paket Telnet                                   
@@ -413,3 +413,107 @@ Berbeda dengan paket-paket sebelumnya, paket ini hanya berisi deretan data heksa
 
 Kredensial tidak terlihat dalam bentuk plaintext seperti pada sesi Telnet karena dua alasan utama, yaitu Enkripsi end-to-end diaktifkan sejak awal sesi dan Public key authentication tidak pernah mengirimkan private key melalui jaringan.
 
+### 14. Analisis Serangan Brute-Force pada Form Login Web (Eiri ke Alice)
+
+Setelah gagal mengakses FTP, Eiri melancarkan serangan brute-force terhadap form login web milik Alice. Analisis dilakukan terhadap file capture `wired_bruteforce.pcapng` untuk mengidentifikasi pola serangan tersebut.
+
+Langkah pertama adalah membuka file wired_bruteforce.pcapng yang telah disediakan soal melalui Wireshark                        
+<img width="1538" height="861" alt="image" src="https://github.com/user-attachments/assets/fe66cce1-5093-4546-9a53-3e566e53fafb" />               
+Dari gambar tersebut dapat dilihat bahwa terdapat interaksi antar IP 172.26.7.50 dengan IP 172.26.7.100, dalam gambar  IP 172.26.7.50 berusaha melakukan login, dan ditemukan bahwa Source Port adalah 49153 dan Destination Port adalah 8080.
+<img width="1541" height="862" alt="image" src="https://github.com/user-attachments/assets/57c483f7-65f5-4fd0-ba21-073b62cb7046" />                        
+Gambar tersebut menunjukkan bahwa IP 172.26.7.50 berhasil melakukan login, ditandai dengan kode `200 OK` dari IP 172.26.7.100. Dan ditemukan bahwa username nya adalah "lain_admin" dan password yang digunakan adalah "wired_pr0tocol_7".
+<img width="1565" height="865" alt="image" src="https://github.com/user-attachments/assets/a3072d27-6990-4fb4-9711-0dc258eaceaf" />                         
+Dari gambar diatas ditemukan bahwa server yang digunakan adalah Apache /2.4.62\r\n
+
+Hasil Validasi temuan:                    
+<img width="940" height="702" alt="image" src="https://github.com/user-attachments/assets/2a349dec-46e0-43e5-ad32-167bfafe40a7" />                           
+| Temuan | Detail |
+|---|---|
+| IP Penyerang | 172.26.7.50 |
+| IP Target | 172.26.7.100 |
+| Source Port | 49153 |
+| Destination Port | 8080 |
+| Username | lain_admin |
+| Password yang berhasil ditembus | wired_pr0tocol |
+| Web Server | Apache/2.4.62 |
+Flag yang ditemukan adalah: KOMJAR26{W1r3d_Brut3_cs0BHBvA3Vj8VGlrT78199kMo}
+
+### 15. Identifikasi Pesan Rahasia dari USB Keystroke Capture
+Melalui filter `usb.bDescriptorType == 1`, diperoleh Device Descriptor, perangkat USB yang terhubung.                        
+<img width="1606" height="803" alt="image" src="https://github.com/user-attachments/assets/c5617370-2604-4f27-9204-7055ab68f214" />                        
+Selanjutnya filter `usb.capdata` digunakan untuk menampilkan data transfer USB HID yang berisi keystroke.                       
+<img width="1597" height="827" alt="image" src="https://github.com/user-attachments/assets/d35846e2-b445-4e85-82cf-ab9ea2dfb5f1" />                      
+Dapat dilihat dari leftover Capture Data bahwa disitu terdapat sebuah kode, dan setiap paket terdapat kode-kode yang berbeda. Berikut adalah rangkuman dari seluruh kodenya:
+```
+02001a0000000000
+0000000000000000
+00000c0000000000
+0000000000000000
+0000150000000000
+0000000000000000
+0000080000000000
+0000000000000000
+0000070000000000
+0000000000000000
+02002d0000000000
+0000000000000000
+0200130000000000
+0000000000000000
+0000150000000000
+0000000000000000
+0000120000000000
+0000000000000000
+0000170000000000
+0000000000000000
+0000120000000000
+0000000000000000
+0000060000000000
+0000000000000000
+0000120000000000
+0000000000000000
+00000f0000000000
+0000000000000000
+02002d0000000000
+0000000000000000
+0000240000000000
+0000000000000000
+02002d0000000000
+0000000000000000
+00000c0000000000
+0000000000000000
+0000160000000000
+0000000000000000
+02002d0000000000
+0000000000000000
+0000040000000000
+0000000000000000
+00000f0000000000
+0000000000000000
+00000c0000000000
+0000000000000000
+0000190000000000
+0000000000000000
+0000080000000000
+0000000000000000
+02002d0000000000
+0000000000000000
+00001f0000000000
+0000000000000000
+0000270000000000
+0000000000000000
+00001f0000000000
+0000000000000000
+0000230000000000
+0000000000000000
+```
+Hasil Validasi temuan:
+<img width="1107" height="703" alt="image" src="https://github.com/user-attachments/assets/9770673e-2b88-4da5-9438-906eb86ca65b" />                               
+| Temuan | Detail |
+|---|---|
+| Vendor ID | 0x046d (Logitech, Inc.) |
+| Product ID | 0xc31c (Keyboard K120) |
+| Alamat device | 2.7.1 (Bus 2, Device 7, Endpoint 1) |
+| Pesan rahasia (setelah decode) | Wired_Protocol_7_is_alive_2026 |
+Flag yang ditemukan: KOMJAR26{USB_K3ystr0k3_oKp1RLioObeUDZnMHOFXLcarZ}
+
+### 16. Analisis Pencurian File Mal
