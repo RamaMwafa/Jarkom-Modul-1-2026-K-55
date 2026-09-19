@@ -312,7 +312,7 @@ Setelah itu kita diminta untuk menuliskan nilai ICMP type dan code untuk request
 
 Dari gambar di atas dapat terlihat bahwa nilai ICMP untuk request adalah 8 dan codenya adalah 0. Sedangkan nilai ICMP untuk reply adalah 0 dan codenya juga 0
 
-### Soal 11: Pada soal ini kita diminta membuktikan kelemahan protokol Telnet               
+### 11. Membuktikan kelemahan protokol Telnet               
 
 Untuk membuktikan kelemahan protokol Telnet dalam mengirimkan kredensial, dibuat sebuah akun uji coba dengan username `phantom_user` dengan pada node chisa, kemudian dilakukan proses login dari jarak jauh dari node Eiri menggunakan Telnet sambil melakukan packet sniffing menggunakan Wireshark.
 
@@ -379,6 +379,60 @@ Follow TCP Stream
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/70c0110d-efc8-45e9-bd36-ec5837ca3d43" />  
 Dari hasil TCP Stream, terlihat jelas bahwa kredensial login (`phantom_user` sebagai username dan `wired_ghost` sebagai password) dapat dibaca secara langsung tanpa proses dekripsi apapun. Hal ini membuktikan bahwa Telnet tidak menyediakan mekanisme enkripsi sama sekali, sehingga siapapun yang mampu menyadap trafik jaringan dapat langsung memperoleh kredensial pengguna.
 
+### 12. Pemindaian Port Menggunakan Netcat (Alice ke Knights)
+
+Alice mencurigai Knights menjalankan beberapa layanan rahasia di node-nya. Untuk membuktikannya, dilakukan pemindaian port dari node Alice ke node Knights menggunakan Netcat, dengan target port 22 (SSH), 80 (HTTP), dan 7777 (port rahasia yang diduga tertutup).
+
+Sebelum pemindaian dilakukan, dipastikan terlebih dahulu bahwa service SSH dan web server (nginx) sudah aktif berjalan pada node Knights:
+
+```sh
+service ssh start
+apt install nginx -y
+service nginx start
+```
+
+```sh
+ss -tulnp | grep -E ':22|:80'
+```                
+<img width="806" height="272" alt="image" src="https://github.com/user-attachments/assets/0afa1705-4eaa-427a-9f1d-487a958d0e82" />
+
+Hasil pengecekan menunjukkan port 22 dan port 80 dalam status `LISTEN`, sedangkan port 7777 tidak terdaftar sebagai port yang aktif mendengarkan (listening).
+
+Selanjutnya, dari node Alice dilakukan pemindaian menggunakan Netcat terhadap ketiga port target, sambil packet capture diaktifkan pada link Switch1–Alice:
+
+```sh
+nc -zv 10.91.3.2 22
+nc -zv 10.91.3.2 80
+nc -zv 10.91.3.2 7777
+```
+Hasil scan pada terminal Alice menunjukkan perbedaan respons yang jelas antar port                             
+<img width="808" height="133" alt="image" src="https://github.com/user-attachments/assets/9e1153ef-4dfe-4141-84a0-fd460fa804c1" />           
+
+Hasil capture kemudian dianalisis di Wireshark untuk membandingkan flag TCP yang dikembalikan oleh Knights terhadap masing-masing percobaan koneksi.                        
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d56aa922-61cd-4ee8-bfde-32d9d21faf45" />
+
+
+Hasil capture kemudian dianalisis di Wireshark untuk membandingkan flag TCP yang dikembalikan oleh Knights terhadap masing-masing percobaan koneksi.
+
+Knights membalas kedua paket `SYN` dari Alice dengan flag **`SYN, ACK`**, menandakan bahwa port 22 dan 80 dalam keadaan terbuka dan siap menerima koneksi. Pemeriksaan detail pada paket No. 4 (balasan untuk port 22) menunjukkan struktur flag sebagai berikut:                       
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b9153b21-9169-4d8b-9c20-82b18dc92841" />
+
+Terlihat bahwa bit **SYN** dan **ACK** sama-sama bernilai *Set*, sesuai dengan tahap kedua dari proses *TCP three-way handshake* (`SYN` ke `SYN, ACK` ke `ACK`), yang menandakan adanya layanan aktif yang mendengarkan pada port tersebut.
+
+**Port 7777 (Tertutup)**
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5dc4b30e-839e-4d4a-99cb-38e6607114f0" />
+
+Berbeda dengan dua port sebelumnya, Knights membalas paket `SYN` yang ditujukan ke port 7777 dengan flag **`RST, ACK`**. Pemeriksaan detail pada paket No. 15 menunjukkan struktur flag sebagai berikut:                
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/97870d75-9c1f-40fb-be39-5e52deaed1fe" />
+
+Terlihat bahwa bit **RST** dan **ACK** sama-sama bernilai *Set*, dengan nilai *Window* sebesar 0 — menandakan bahwa server secara eksplisit menolak permintaan koneksi karena tidak terdapat proses atau layanan apapun yang terikat (*bound*) pada port tersebut, membuktikan port 7777 dalam keadaan tertutup.
+
+| Port | Status yang diharapkan | Flag yang diterima | Bit yang aktif | Hasil |
+|---|---|---|---|---|
+| 22 (SSH) | Terbuka | SYN, ACK | SYN=1, ACK=1 | Sesuai |
+| 80 (HTTP) | Terbuka | SYN, ACK | SYN=1, ACK=1 | Sesuai |
+| 7777 (rahasia) | Tertutup | RST, ACK | RST=1, ACK=1 | Sesuai |
 
 ### 13. Administrasi Jarak Jauh Aman Menggunakan SSH (Public Key Authentication)
 Untuk mengamankan proses administrasi jarak jauh, dikonfigurasikan autentikasi SSH berbasis public key (tanpa password) dari node Mika menuju node Knights.
