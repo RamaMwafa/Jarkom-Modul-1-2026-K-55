@@ -436,6 +436,7 @@ Hasil Validasi temuan:
 | Username | lain_admin |
 | Password yang berhasil ditembus | wired_pr0tocol |
 | Web Server | Apache/2.4.62 |
+
 Flag yang ditemukan adalah: KOMJAR26{W1r3d_Brut3_cs0BHBvA3Vj8VGlrT78199kMo}
 
 ### 15. Identifikasi Pesan Rahasia dari USB Keystroke Capture
@@ -514,6 +515,7 @@ Hasil Validasi temuan:
 | Product ID | 0xc31c (Keyboard K120) |
 | Alamat device | 2.7.1 (Bus 2, Device 7, Endpoint 1) |
 | Pesan rahasia (setelah decode) | Wired_Protocol_7_is_alive_2026 |
+
 Flag yang ditemukan: KOMJAR26{USB_K3ystr0k3_oKp1RLioObeUDZnMHOFXLcarZ}
 
-### 16. Analisis Pencurian File Mal
+
