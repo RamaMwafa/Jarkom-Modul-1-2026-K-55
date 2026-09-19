@@ -96,11 +96,15 @@ Alice - Chisa
 
 Alice - Knights
 
+<img width="504" height="159" alt="image" src="https://github.com/user-attachments/assets/417c9d96-0bf2-456b-b42d-d6acce3dc0eb" />
+
 Alice - Eiri
 
 <img width="535" height="149" alt="image" src="https://github.com/user-attachments/assets/e4ea6c31-fe9e-4144-8986-6eb0872380cb" />
 
 Mika - Alice
+
+<img width="520" height="147" alt="image" src="https://github.com/user-attachments/assets/ce0beabc-6045-4926-ac26-3a1ad56bb067" />
 
 Mika - Chisa
 
@@ -108,9 +112,59 @@ Mika - Chisa
 
 Mika - Knights
 
+<img width="526" height="149" alt="image" src="https://github.com/user-attachments/assets/f1a368ac-5727-4fd4-a8ce-da5ccf8068a5" />
+
 Mika - Eiri
 
 <img width="536" height="201" alt="image" src="https://github.com/user-attachments/assets/7683f418-af92-40c1-a9af-f1f79e0e13ee" />
+
+Chisa - Alice
+
+<img width="507" height="150" alt="image" src="https://github.com/user-attachments/assets/a88a6c69-121b-4876-9b84-df25a4144e2a" />
+
+Chisa - Mika
+
+<img width="509" height="157" alt="image" src="https://github.com/user-attachments/assets/7a2a0d28-3944-4d3c-9b78-c121674a3d0a" />
+
+Chisa - Knights
+
+<img width="509" height="149" alt="image" src="https://github.com/user-attachments/assets/7c5d97a7-805c-4424-bf66-9905d280f786" />
+
+Chisa - Eiri
+
+<img width="520" height="150" alt="image" src="https://github.com/user-attachments/assets/9832f78a-53b8-4cc0-bd57-c9a1268d6e0f" />
+
+Knights - Alice
+
+<img width="527" height="148" alt="image" src="https://github.com/user-attachments/assets/38d23009-25df-4735-9306-cfca7ec8ed9d" />
+
+Knights - Mika
+
+<img width="513" height="150" alt="image" src="https://github.com/user-attachments/assets/7c2e8b9b-c54f-4340-91a4-3e1774c14c77" />
+
+Knights - Chisa
+
+<img width="515" height="152" alt="image" src="https://github.com/user-attachments/assets/cceeab68-f9f7-49f6-9a50-277e89e0624f" />
+
+Knights - Eiri
+
+<img width="518" height="147" alt="image" src="https://github.com/user-attachments/assets/e10f2edc-4cbf-4802-aaef-5caf79fb85af" />
+
+Eiri - Alice
+
+<img width="506" height="144" alt="image" src="https://github.com/user-attachments/assets/35f0f0c2-4c22-4dcc-840e-ac3af54d33e9" />
+
+Eiri - Mika
+
+<img width="509" height="146" alt="image" src="https://github.com/user-attachments/assets/5a4bda0e-b1f1-40c6-b33f-c92589997c80" />
+
+Eiri - Chisa
+
+<img width="512" height="144" alt="image" src="https://github.com/user-attachments/assets/3a8f1dfc-89bd-460b-a1c8-a78fc4296809" />
+
+Eiri - Knights
+
+<img width="513" height="147" alt="image" src="https://github.com/user-attachments/assets/6b3d1f10-897c-4acf-b65d-7bb0b2b539d7" />
 
 Soal 4: Kita diminta agar setiap client bisa melakukan ping 8.8.8.8 dan membuka domain web google.com
 
