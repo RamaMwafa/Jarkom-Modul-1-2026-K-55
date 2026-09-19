@@ -6,17 +6,17 @@
 | M. Rama Maulana Wafa | 5027251019 |                                 
 | Arjunina Maqbulin Usman | 5027251007 |  
 
-Soal 1 : Pada soal ini kita diminta untuk membuat topologi jaringan dengan keterangan, 1 router (Lain), 3 switch, 5 client (Alice, Mika, Chisa, knights, Eiri)
+### Soal 1 : Pada soal ini kita diminta untuk membuat topologi jaringan dengan keterangan, 1 router (Lain), 3 switch, 5 client (Alice, Mika, Chisa, knights, Eiri)
 
 <img width="594" height="587" alt="image" src="https://github.com/user-attachments/assets/7f3c927e-4d20-45ac-a23c-74734833cf74" />
 
-Soal 2: kita diminta untuk mengkonfigurasi Lain agar dapat tersambung pada internet melalui NAT/DHCP pada interface eth0
+### Soal 2: kita diminta untuk mengkonfigurasi Lain agar dapat tersambung pada internet melalui NAT/DHCP pada interface eth0
 ```
 auto eth0
 iface eth0 inet dhcp
 ```
 
-Soal 3: Kita diminta untuk mengkonfigurasikan Lain setiap client agar bisa saling berkomunikasi dan terhubung
+### Soal 3: Kita diminta untuk mengkonfigurasikan Lain setiap client agar bisa saling berkomunikasi dan terhubung
 
 Konfigurasi untuk router (Lain)
 ```
@@ -166,7 +166,7 @@ Eiri - Knights
 
 <img width="513" height="147" alt="image" src="https://github.com/user-attachments/assets/6b3d1f10-897c-4acf-b65d-7bb0b2b539d7" />
 
-Soal 4: Kita diminta agar setiap client bisa melakukan ping 8.8.8.8 dan membuka domain web google.com
+### Soal 4: Kita diminta agar setiap client bisa melakukan ping 8.8.8.8 dan membuka domain web google.com
 
 ```
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
@@ -192,11 +192,15 @@ Eiri
 
 <img width="642" height="341" alt="image" src="https://github.com/user-attachments/assets/443f85b4-2670-48c5-8ece-7c98c7547f26" />
 
-Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` agar ketika restart konfigurasi jaringan tidak hilang
+### Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` agar ketika restart konfigurasi jaringan tidak hilang
 
 <img width="266" height="185" alt="image" src="https://github.com/user-attachments/assets/4342211b-372c-4fe0-b59d-e00e02dd2c07" />
 
-Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP dengan menjalankan sebuah file di node Mika
+### Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP dengan menjalankan sebuah file di node Mika
+
+Pertama kita jalankan dulu file yang sudah disediakan
+
+<img width="580" height="829" alt="image" src="https://github.com/user-attachments/assets/1355533f-a0de-44d8-b299-8280a2a634e7" />
 
 Berikut adalah hasil display menggunakan wireshark
 
@@ -214,7 +218,7 @@ Protokol ICMP
 
 Terdapat pula beberapa paket lainnya yang lolos, seperti `ICMPv6` dan `ARP`
 
-Soal 7: Chisa mendirikan server FTP dan membuat beberapa akun, seperti alice(read & write), mika(read only), dan eiri(blacklist). Lalu kita perlu membuktikan bahwa user alice dan eiri berjalan sesuai akses yang diberikan
+### Soal 7: Chisa mendirikan server FTP dan membuat beberapa akun, seperti alice(read & write), mika(read only), dan eiri(blacklist). Lalu kita perlu membuktikan bahwa user alice dan eiri berjalan sesuai akses yang diberikan
 Pertama kita update dan upgrade node Chisa
 ```
 apt update & apt upgrade -y
@@ -287,15 +291,19 @@ bukti pembatasan user ftp eiri untuk upload file
 
 <img width="575" height="323" alt="image" src="https://github.com/user-attachments/assets/937942e3-17a7-4a3f-b6bf-e563011f11dc" />
 
-Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi menggunakan user alice dan mengupload sebuah file kemudian menganalisis menggunakan wireshark
+### Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi menggunakan user alice dan mengupload sebuah file kemudian menganalisis menggunakan wireshark
 
-Pertama kita harus login terlebih dahulu ke ftp dengan node knights menggunakan akun alice
+Pertama kita harus login terlebih dahulu ke ftp dengan node knights menggunakan akun alice. Kemudian kita coba upload sebuah file bernama `knights_report.txt` dan akan kita analisis menggunakan wireshark
 
-Soal 9: Pada soal ini kita diminta untuk membuktikan pembatasan read-only pada user Eiri di FTP server Chisa menggunakan akun Mika
+<img width="644" height="340" alt="image" src="https://github.com/user-attachments/assets/2bcf030e-f75b-48fc-bd91-5b2b562fb9e0" />
 
-Pertama kita login terlebih dahulu lewat node Eiri dan menggunakan akun milik Mika
+### Soal 9: Pada soal ini kita diminta untuk membuktikan pembatasan read-only pada user Eiri di FTP server Chisa menggunakan akun Mika
 
-Soal 10 : Pada soal ini kita diminta untuk menguji ketahanan koneksi ke server node Chisa
+Pertama kita login terlebih dahulu lewat node Eiri dan menggunakan akun milik Mika. Setelah itu kita login menggunakan akun mika di server ftp Chisa dan kita akan mencoba mengupload sebuah file `protocol7_manifest.txt` ke server ftp Chisa
+
+<img width="501" height="211" alt="image" src="https://github.com/user-attachments/assets/5354aa75-e935-4d3e-9b01-4e0cdcf54feb" />
+
+### Soal 10 : Pada soal ini kita diminta untuk menguji ketahanan koneksi ke server node Chisa
 
 Pertama kita kirimkan request kepada Chisa dengan menggunakan command `ping -c 77 -s 128 -i 0.3 10.91.2.2` Dengan menggunakan node Knights. Command ini akan mengirim reqest ke Chisa sebanyak 77 paket yang nantinya akan kita analisis dengan wireshark
 
