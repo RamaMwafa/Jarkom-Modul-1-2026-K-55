@@ -275,6 +275,11 @@ Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights 
 
 Pertama kita harus login terlebih dahulu ke ftp dengan node knights menggunakan akun alice
 
+Soal 10 :
+
+<img width="574" height="393" alt="image" src="https://github.com/user-attachments/assets/239804d8-df1e-42d2-9f8f-fe0c9b519bc4" />
+
+
 
 ### Soal 11: Pada soal ini kita diminta membuktikan kelemahan protokol Telnet               
 
