@@ -572,7 +572,8 @@ Flag yang ditemukan: KOMJAR26{Navi_C2_D0wnl04d_p0iaTw6trAS4aRuYW7htdNcNf}
 ### 19. Analisis Serangan Ekstorsi melalui Protokol SMTP
 <img width="1512" height="848" alt="image" src="https://github.com/user-attachments/assets/0a80cb18-1f64-4507-ac06-741ee28cc3af" />                  
 <img width="1513" height="837" alt="image" src="https://github.com/user-attachments/assets/5576e227-56e4-4498-a3e8-caa29cb9f942" />                       
-<img width="1242" height="752" alt="image" src="https://github.com/user-attachments/assets/9aff12db-53ec-4c54-bde3-fc8513890ad6" />
+<img width="1242" height="752" alt="image" src="https://github.com/user-attachments/assets/9aff12db-53ec-4c54-bde3-fc8513890ad6" />                    
+
 | Temuan | Detail |
 |---|---|
 | Alamat email korban | victim@protocol7.co.jp |
@@ -584,7 +585,8 @@ Flag yang ditemukan: KOMJAR26{Navi_C2_D0wnl04d_p0iaTw6trAS4aRuYW7htdNcNf}
 ### 20. Dekripsi Trafik TLS untuk Mengungkap Komunikasi Malware Tersembunyi
 <img width="1596" height="857" alt="image" src="https://github.com/user-attachments/assets/4e7564b1-ad75-4909-b66a-601538db14bc" />                              
 <img width="1591" height="856" alt="image" src="https://github.com/user-attachments/assets/bfe3055e-4fec-42e5-b51b-283f90fe31c9" />                           
-<img width="1307" height="682" alt="image" src="https://github.com/user-attachments/assets/755786ff-2e5b-4870-842c-d8acaccd4b90" />           
+<img width="1307" height="682" alt="image" src="https://github.com/user-attachments/assets/755786ff-2e5b-4870-842c-d8acaccd4b90" />                    
+
 | Temuan | Detail |
 |---|---|
 | Versi protokol TLS yang dinegosiasikan | TLSv1.2 |
