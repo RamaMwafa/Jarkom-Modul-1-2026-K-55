@@ -174,6 +174,7 @@ echo "nameserver 8.8.8.8" > /etc/resolv.conf
 Hasil setelah melakukan `ping 8.8.8.8` dan `ping google.com`
 Alice
 
+<img width="644" height="359" alt="image" src="https://github.com/user-attachments/assets/1ca0c39b-a5e0-4a9d-a876-67761020fe9f" />
 
 Mika
 
@@ -188,6 +189,8 @@ Knights
 <img width="654" height="307" alt="image" src="https://github.com/user-attachments/assets/b6dcccb6-7999-49c7-b29b-4bcc294baa47" />
 
 Eiri
+
+<img width="642" height="341" alt="image" src="https://github.com/user-attachments/assets/443f85b4-2670-48c5-8ece-7c98c7547f26" />
 
 Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` agar ketika restart konfigurasi jaringan tidak hilang
 
@@ -268,7 +271,10 @@ bukti pembatasan user ftp eiri untuk upload file
 
 <img width="575" height="323" alt="image" src="https://github.com/user-attachments/assets/937942e3-17a7-4a3f-b6bf-e563011f11dc" />
 
-Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi mneggunakan user alice
+Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights tetapi menggunakan user alice dan mengupload sebuah file kemudian menganalisis menggunakan wireshark
+
+Pertama kita harus login terlebih dahulu ke ftp dengan node knights menggunakan akun alice
+
 
 ### Soal 11: Pada soal ini kita diminta membuktikan kelemahan protokol Telnet               
 
