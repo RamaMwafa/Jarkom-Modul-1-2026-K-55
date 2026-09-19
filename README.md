@@ -196,7 +196,23 @@ Soal 5: Pada soal ini kita diminta membuat script di dalam file `cek_status.sh` 
 
 <img width="266" height="185" alt="image" src="https://github.com/user-attachments/assets/4342211b-372c-4fe0-b59d-e00e02dd2c07" />
 
-Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP
+Soal 6: Pada soal ini kita perlu untuk melakukan packet sniffing menggunakan wireshark dengan menerapkan filter untuk menyaring paket berprotokol DNS dan ICMP dengan menjalankan sebuah file di node Mika
+
+Berikut adalah hasil display menggunakan wireshark
+
+<img width="1920" height="897" alt="image" src="https://github.com/user-attachments/assets/73be16de-5ba2-4594-a1e6-793c00ef4bab" />
+
+Kemudian kita diminta untuk menyaring paket yang berprotokol DNS dan ICMP dengan menggunakan display filter yang ada di wireshark
+
+Protokol DNS
+
+<img width="1920" height="405" alt="image" src="https://github.com/user-attachments/assets/001d302a-cd7a-4cd5-b07c-74ee9d5962f6" />
+
+Protokol ICMP
+
+<img width="1920" height="483" alt="image" src="https://github.com/user-attachments/assets/db75c470-820d-4770-bc0f-da3ad68185b7" />
+
+Terdapat pula beberapa paket lainnya yang lolos, seperti `ICMPv6` dan `ARP`
 
 Soal 7: Chisa mendirikan server FTP dan membuat beberapa akun, seperti alice(read & write), mika(read only), dan eiri(blacklist). Lalu kita perlu membuktikan bahwa user alice dan eiri berjalan sesuai akses yang diberikan
 Pertama kita update dan upgrade node Chisa
@@ -275,11 +291,26 @@ Soal 8: Pada soal ini kita diminta untuk login ke dalam ftp dengan node knights 
 
 Pertama kita harus login terlebih dahulu ke ftp dengan node knights menggunakan akun alice
 
-Soal 10 :
+Soal 9: Pada soal ini kita diminta untuk membuktikan pembatasan read-only pada user Eiri di FTP server Chisa menggunakan akun Mika
+
+Pertama kita login terlebih dahulu lewat node Eiri dan menggunakan akun milik Mika
+
+Soal 10 : Pada soal ini kita diminta untuk menguji ketahanan koneksi ke server node Chisa
+
+Pertama kita kirimkan request kepada Chisa dengan menggunakan command `ping -c 77 -s 128 -i 0.3 10.91.2.2` Dengan menggunakan node Knights. Command ini akan mengirim reqest ke Chisa sebanyak 77 paket yang nantinya akan kita analisis dengan wireshark
 
 <img width="574" height="393" alt="image" src="https://github.com/user-attachments/assets/239804d8-df1e-42d2-9f8f-fe0c9b519bc4" />
 
+Berikut hasilnya yang tertangkap oleh wireshark
 
+<img width="1741" height="907" alt="image" src="https://github.com/user-attachments/assets/df8705d0-0970-467a-8f2b-73a1738824b5" />
+
+Setelah itu kita diminta untuk menuliskan nilai ICMP type dan code untuk request dan reply
+
+<img width="800" height="741" alt="image" src="https://github.com/user-attachments/assets/5c405684-cc1f-4825-81e0-531ef0c71745" />
+<img width="803" height="658" alt="image" src="https://github.com/user-attachments/assets/a13925f8-ac68-4de5-8797-b907d01809f3" />
+
+Dari gambar di atas dapat terlihat bahwa nilai ICMP untuk request adalah 8 dan codenya adalah 0. Sedangkan nilai ICMP untuk reply adalah 0 dan codenya juga 0
 
 ### Soal 11: Pada soal ini kita diminta membuktikan kelemahan protokol Telnet               
 
