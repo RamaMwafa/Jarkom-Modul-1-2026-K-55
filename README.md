@@ -518,4 +518,73 @@ Hasil Validasi temuan:
 
 Flag yang ditemukan: KOMJAR26{USB_K3ystr0k3_oKp1RLioObeUDZnMHOFXLcarZ}
 
+### 16. Analisis Pencurian File Malware melalui FTP                            
+<img width="1463" height="830" alt="image" src="https://github.com/user-attachments/assets/24c45076-cdac-401d-9475-a2a44a77c025" />                          
+<img width="1627" height="867" alt="image" src="https://github.com/user-attachments/assets/0bc32314-bdfb-4822-8e93-8322df475ff1" />                                      
+<img width="1626" height="862" alt="image" src="https://github.com/user-attachments/assets/bfca8a79-f59a-45a4-bd6a-8d6f278226cb" />                      
+<img width="1520" height="852" alt="image" src="https://github.com/user-attachments/assets/8cf249c0-af6b-4ff9-a671-513202641e81" />            
+<img width="1060" height="752" alt="image" src="https://github.com/user-attachments/assets/75496692-8550-496b-a4f2-640bf8c06b8d" />                      
+
+| Temuan | Detail |
+|---|---|
+| IP Server FTP Penyerang | 198.51.100.7 |
+| Banner Software FTP | vsftpd 3.0.5 |
+| Username | knights_agent |
+| Password | N4v1_s3cur3_2026 |
+| Ukuran file malware `knights_payload.exe` | 524288 bytes |
+
+Flag yang ditemukan: KOMJAR26{FTP_Th3ft_y2pITZMrnGbe0GkcM0jeohbSV}
+
+### 17. Analisis Pengunduhan Malware melalui HTTP                               
+<img width="1577" height="863" alt="image" src="https://github.com/user-attachments/assets/5e47d88e-61bf-4b01-aea7-d555cc8052ec" />                    
+<img width="1571" height="846" alt="image" src="https://github.com/user-attachments/assets/cb35ce4b-a1cf-4d27-b872-f6c37306e0b3" />               
+<img width="871" height="693" alt="image" src="https://github.com/user-attachments/assets/e30eb5fb-ec28-4609-84af-f48b431a03c8" />                    
+
+| Temuan | Detail |
+|---|---|
+| Nama domain (Host) | wired-update.net |
+| Alamat IP server penyerang | 203.0.113.42 |
+| Nama file malware | navi_agent.exe |
+| Status HTTP response | 200 |
+
+Flag yang ditemukan: KOMJAR26{Navi_C2_D0wnl04d_p0iaTw6trAS4aRuYW7htdNcNf}
+
+### 18. Analisis Transfer Malware melalui Protokol SMB2                                  
+<img width="1588" height="853" alt="image" src="https://github.com/user-attachments/assets/c788966d-5fb0-4f9e-93f8-7e36675133d2" />                          
+
+<img width="1222" height="702" alt="image" src="https://github.com/user-attachments/assets/18a31017-7192-46e7-93b6-a9f060cb1125" />             
+
+
+| Temuan | Detail |
+|---|---|
+| Protokol yang dieksploitasi | SMB2 |
+| IP Attacker | 10.7.3.100 |
+| IP Victim | 10.7.1.50 |
+| Folder tujuan penyimpanan | System32 |
+| Nama file executable | wired_trojan_payload.exe |
+
+
+### 19. Analisis Serangan Ekstorsi melalui Protokol SMTP
+<img width="1512" height="848" alt="image" src="https://github.com/user-attachments/assets/0a80cb18-1f64-4507-ac06-741ee28cc3af" />                  
+<img width="1513" height="837" alt="image" src="https://github.com/user-attachments/assets/5576e227-56e4-4498-a3e8-caa29cb9f942" />                       
+<img width="1242" height="752" alt="image" src="https://github.com/user-attachments/assets/9aff12db-53ec-4c54-bde3-fc8513890ad6" />
+| Temuan | Detail |
+|---|---|
+| Alamat email korban | victim@protocol7.co.jp |
+| Password korban yang diklaim bocor | pr0tocol_7_user |
+| Jenis malware yang diklaim | ransomware |
+| Batas waktu pembayaran | 3 hari |
+| MailClientID | 7719980706 |
+
+### 20. Dekripsi Trafik TLS untuk Mengungkap Komunikasi Malware Tersembunyi
+<img width="1596" height="857" alt="image" src="https://github.com/user-attachments/assets/4e7564b1-ad75-4909-b66a-601538db14bc" />                              
+<img width="1591" height="856" alt="image" src="https://github.com/user-attachments/assets/bfe3055e-4fec-42e5-b51b-283f90fe31c9" />                           
+<img width="1307" height="682" alt="image" src="https://github.com/user-attachments/assets/755786ff-2e5b-4870-842c-d8acaccd4b90" />           
+| Temuan | Detail |
+|---|---|
+| Versi protokol TLS yang dinegosiasikan | TLSv1.2 |
+| Nama domain (SNI) yang diakses | example.com |
+| Alamat IP server HTTPS penyerang | 93.184.216.34 |
+| User-Agent yang digunakan | curl/7.62.0 |
+| HTTP request method dan path tersembunyi | HEAD / |
 
